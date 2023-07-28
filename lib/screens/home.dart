@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:twitter_clone/screens/homeLogIn.dart';
+import 'package:twitter_clone/screens/register.dart';
 
 class Home extends StatelessWidget {
     Home({Key? key}) : super(key: key);
@@ -9,39 +11,127 @@ class Home extends StatelessWidget {
             backgroundColor: Colors.black,
             appBar: buildAppBar(),
             body: Column( 
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [ 
-                    Container( 
-                        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                        child: const Text(
-                            "To get started, first enter your phone, email or @username", 
-                            style: TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white
+                    Center(
+                      child: Container( 
+                            padding: const EdgeInsets.all(250),
+                            child: const Text(
+                                "See what's happening in the world right now.", 
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white
+                                ),
+                            ),
+                        ),
+                      ),
+                    const Spacer(),
+                    ElevatedButton(
+                        onPressed: () {},
+                        child:  SizedBox(
+                            width: 300,
+                            height: 40,
+                            child: ClipRRect( 
+                                child: Image.asset('pictures/google_icon.png'),
                             ),
                         ),
                     ),
-                    searchBox(),
-                    const Spacer(),
-                    Align( 
-                        alignment: Alignment.bottomCenter,
-                        child: Padding(
-                            padding: EdgeInsets.all(15.0),
-                            child: Row( 
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [ 
-                                    TextButton(
-                                        onPressed: () {},
-                                        child: Text("Forgot password?", style: TextStyle(color: Colors.blue),),
-                                    ),
-                                    ElevatedButton(
-                                        onPressed: () {},
-                                        style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
-                                        child: Text("Next", style: TextStyle(color: Colors.white),)
-                                    ),
-                                ],
-                            )
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                            child: Container( 
+                                margin: const EdgeInsets.only(left: 60, right: 10),
+                                child: const Divider( 
+                                    color: Colors.grey,
+                                ),
+                            ),
                         ),
+                        const Text(
+                            'or', 
+                            style: TextStyle(color: Colors.grey, fontSize: 10),
+                        ),
+                        Expanded(
+                            child: Container( 
+                                margin: const EdgeInsets.only(left: 10, right: 60),
+                                child: const Divider( 
+                                    color: Colors.grey,
+                                ),
+                            ),
+                        ),
+                      ],
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => Register()) 
+                            );
+                        },
+                        style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+                        child:  const SizedBox(
+                            width: 300,
+                            height: 40,
+                            child: Center(
+                              child: Text(
+                                  'Create account',
+                                  style: TextStyle(color: Colors.white,)
+                              ),
+                            )
+                        ), 
+                    ),
+                    Center(
+                      child: Row( 
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [ 
+                              const Text(
+                                "By signing up you agree to our",
+                                style: TextStyle(color: Colors.grey, fontSize: 10),
+                              ),
+                              TextButton(
+                                  onPressed: () {},
+                                  child: const Text(
+                                    "Terms Privacy Policy",
+                                    style: TextStyle(color: Colors.blue, fontSize: 10),
+                                  )
+                              ),
+                              const Text(
+                                "and",
+                                style: TextStyle(color: Colors.grey, fontSize: 10),
+                              ),
+                              TextButton(
+                                  onPressed: () {},
+                                  child: const Text(
+                                    "Cookie Use.",
+                                    style: TextStyle(color: Colors.blue, fontSize: 10),
+                                  )
+                              )
+                          ],
+                      ),
+                    ),
+                    const Spacer(), 
+                    Row( 
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                            const Text(
+                                "Have an account already?",
+                                style: TextStyle(color: Colors.grey, fontSize: 10),
+                            ),
+                            TextButton(
+                                onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => HomeLogIn()) 
+                                    );
+                                },
+                                child: const Text(
+                                    "Log in",
+                                    style: TextStyle(color: Colors.blue, fontSize: 10),
+                                )
+                            )
+                        ] 
                     )
                 ],
             ),
@@ -52,14 +142,10 @@ class Home extends StatelessWidget {
 AppBar buildAppBar() {
     return AppBar( 
         backgroundColor: Colors.black,
+        automaticallyImplyLeading: false,
         elevation: 0,
         title: Row(
             children: [ 
-                Icon( 
-                    Icons.close,
-                    color: Colors.blue,
-                    size: 30,
-                ),
                 Expanded(
                   child: Container( 
                       height: 40,
@@ -70,21 +156,6 @@ AppBar buildAppBar() {
                   ),
                 ),
             ],
-        ),
-    );
-}
-
-Widget searchBox() {
-    return Container( 
-        padding: EdgeInsets.symmetric(horizontal: 15),
-        child: TextField( 
-            onChanged: (value) {},
-            style: TextStyle(color: Colors.white,),
-            decoration: InputDecoration( 
-                contentPadding: EdgeInsets.all(0),
-                hintText: 'Phone, email or username',
-                hintStyle: TextStyle(color: Colors.grey),
-            ),
         ),
     );
 }

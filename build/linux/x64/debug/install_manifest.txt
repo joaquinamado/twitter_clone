@@ -3,6 +3,7 @@
 /home/joaquin/Programming/Flutter/twitter_clone/build/linux/x64/debug/bundle/lib/libflutter_linux_gtk.so
 /home/joaquin/Programming/Flutter/twitter_clone/build/linux/x64/debug/bundle/data/flutter_assets/AssetManifest.bin
 /home/joaquin/Programming/Flutter/twitter_clone/build/linux/x64/debug/bundle/data/flutter_assets/pictures/twitter_icon.png
+/home/joaquin/Programming/Flutter/twitter_clone/build/linux/x64/debug/bundle/data/flutter_assets/pictures/google_icon.png
 /home/joaquin/Programming/Flutter/twitter_clone/build/linux/x64/debug/bundle/data/flutter_assets/AssetManifest.json
 /home/joaquin/Programming/Flutter/twitter_clone/build/linux/x64/debug/bundle/data/flutter_assets/FontManifest.json
 /home/joaquin/Programming/Flutter/twitter_clone/build/linux/x64/debug/bundle/data/flutter_assets/shaders/ink_sparkle.frag
