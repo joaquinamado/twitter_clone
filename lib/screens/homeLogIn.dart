@@ -3,7 +3,8 @@ import '../screens/PassLogIn.dart';
 
 class HomeLogIn extends StatelessWidget {
     HomeLogIn({Key? key}) : super(key: key);
-
+    
+    String email = '';
     @override 
     Widget build(BuildContext context) {
         return Scaffold( 
@@ -39,7 +40,7 @@ class HomeLogIn extends StatelessWidget {
                                         onPressed: () {
                                             Navigator.push(
                                                 context,
-                                                MaterialPageRoute(builder: (context) => EnterPassword()) 
+                                                MaterialPageRoute(builder: (context) => EnterPassword(email: email,)) 
                                             );
                                         },
                                         style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
@@ -50,6 +51,21 @@ class HomeLogIn extends StatelessWidget {
                         ),
                     )
                 ],
+            ),
+        );
+    }
+
+    Widget searchBox() {
+        return Container( 
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: TextField( 
+                onChanged: (value) {email = value;},
+                style: const TextStyle(color: Colors.white,),
+                decoration: const InputDecoration( 
+                    contentPadding: EdgeInsets.all(0),
+                    hintText: 'Phone, email or username',
+                    hintStyle: TextStyle(color: Colors.grey),
+                ),
             ),
         );
     }
@@ -82,21 +98,6 @@ AppBar buildAppBar(BuildContext context) {
                   ),
                 ),
             ],
-        ),
-    );
-}
-
-Widget searchBox() {
-    return Container( 
-        padding: EdgeInsets.symmetric(horizontal: 15),
-        child: TextField( 
-            onChanged: (value) {},
-            style: TextStyle(color: Colors.white,),
-            decoration: InputDecoration( 
-                contentPadding: EdgeInsets.all(0),
-                hintText: 'Phone, email or username',
-                hintStyle: TextStyle(color: Colors.grey),
-            ),
         ),
     );
 }

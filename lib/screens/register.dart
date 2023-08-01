@@ -1,8 +1,45 @@
 import 'package:flutter/material.dart';
 import '../screens/PassLogIn.dart';
+import '../screens/feed.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class Register extends StatelessWidget {
+class Register extends StatefulWidget {
     Register({Key? key}) : super(key: key);
+
+  @override
+  State<Register> createState() => _RegisterState();
+}
+
+class _RegisterState extends State<Register> {
+
+    bool passState = false;
+    final _passController = TextEditingController();
+    @override
+    void initState() {
+        passState = false;
+        super.initState();
+    }
+
+    FirebaseAuth auth = FirebaseAuth.instance;
+
+    void registerAction() async {
+        try {
+            UserCredential userCredential = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(email: email, password: password);
+        } on FirebaseAuthException catch (e) {
+            if (e.code == 'weak-password') {
+                print('The password provided is too weak.');
+            } else if (e.code == 'email-already-in-use') {
+                print('The account already exists for that email.');
+            }
+        } catch (e) {
+                print(e);
+         }
+    }
+
+
+    String email = '';
+    String password = '';
 
     @override 
     Widget build(BuildContext context) {
@@ -23,8 +60,9 @@ class Register extends StatelessWidget {
                         ),
                     ),
                     searchBox('Name'),
-                    searchBox('Phone number or email address'),
                     searchBox('Date of birth'),
+                    insertMail(),
+                    insertPassword(),
                     const Spacer(),
                     Align( 
                         alignment: Alignment.bottomCenter,
@@ -34,7 +72,12 @@ class Register extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [ 
                                     ElevatedButton(
-                                        onPressed: () {
+                                        onPressed: () async => {
+                                            registerAction(),
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(builder: (context) => Feed()) 
+                                            ),
                                         },
                                         style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
                                         child: const Text("Next", style: TextStyle(color: Colors.white),)
@@ -45,6 +88,67 @@ class Register extends StatelessWidget {
                     )
                 ],
             ),
+        );
+    }
+
+    Widget searchBox(String hinttext) {
+        return Container( 
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: TextField( 
+                onChanged: (value) {},
+                style: const TextStyle(color: Colors.white,),
+                decoration: InputDecoration( 
+                    contentPadding: const EdgeInsets.all(0),
+                    hintText: hinttext,
+                    hintStyle: const TextStyle(color: Colors.grey),
+                ),
+            ),
+        );
+    }
+
+    Widget insertMail() {
+        return Container( 
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: TextField( 
+                onChanged: (value) => setState(() {
+                    email = value;
+                }),
+                style: const TextStyle(color: Colors.white,),
+                decoration: const InputDecoration( 
+                    contentPadding: EdgeInsets.all(0),
+                    hintText: 'Email address',
+                    hintStyle: TextStyle(color: Colors.grey),
+                ),
+            ),
+        );
+    }
+    Widget insertPassword() {
+        return Container( 
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: TextField( 
+                    style: const TextStyle(color: Colors.white,),
+                    obscureText: !passState,
+                    controller: _passController,
+                    onChanged: (value) => setState(() {
+                        password = value;
+                    }),
+                    decoration: InputDecoration( 
+                        contentPadding: const EdgeInsets.all(0),
+                        hintText: 'Password',
+                        hintStyle: const TextStyle(color: Colors.grey),
+                        suffixIcon: IconButton(
+                            icon: Icon( 
+                                passState? Icons.visibility: Icons.visibility_off,   
+                            ),
+                            iconSize: 20,
+                            onPressed: () {
+                                setState(() {
+                                    passState = !passState;
+                                });
+                            },
+                        ),
+                    ),
+                )
         );
     }
 }
@@ -80,17 +184,3 @@ AppBar buildAppBar(BuildContext context) {
     );
 }
 
-Widget searchBox(String hinttext) {
-    return Container( 
-        padding: EdgeInsets.symmetric(horizontal: 15),
-        child: TextField( 
-            onChanged: (value) {},
-            style: TextStyle(color: Colors.white,),
-            decoration: InputDecoration( 
-                contentPadding: EdgeInsets.all(0),
-                hintText: hinttext,
-                hintStyle: TextStyle(color: Colors.grey),
-            ),
-        ),
-    );
-}

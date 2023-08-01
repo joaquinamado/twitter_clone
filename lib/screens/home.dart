@@ -16,7 +16,7 @@ class Home extends StatelessWidget {
                 children: [ 
                     Center(
                       child: Container( 
-                            padding: const EdgeInsets.all(250),
+                            padding: const EdgeInsets.symmetric(vertical: 200, horizontal: 20),
                             child: const Text(
                                 "See what's happening in the world right now.", 
                                 textAlign: TextAlign.center,
@@ -29,13 +29,16 @@ class Home extends StatelessWidget {
                         ),
                       ),
                     const Spacer(),
-                    ElevatedButton(
-                        onPressed: () {},
-                        child:  SizedBox(
-                            width: 300,
-                            height: 40,
-                            child: ClipRRect( 
-                                child: Image.asset('pictures/google_icon.png'),
+                    Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 300),
+                        child: ElevatedButton(
+                            onPressed: () {},
+                            child: SizedBox(
+                                width: 300,
+                                height: 40,
+                                child: ClipRRect( 
+                                    child: Image.asset('pictures/google_icon.png'),
+                                ),
                             ),
                         ),
                     ),
@@ -43,7 +46,7 @@ class Home extends StatelessWidget {
                       children: <Widget>[
                         Expanded(
                             child: Container( 
-                                margin: const EdgeInsets.only(left: 60, right: 10),
+                                padding: EdgeInsets.only(left: 300, right: 10),
                                 child: const Divider( 
                                     color: Colors.grey,
                                 ),
@@ -55,7 +58,7 @@ class Home extends StatelessWidget {
                         ),
                         Expanded(
                             child: Container( 
-                                margin: const EdgeInsets.only(left: 10, right: 60),
+                                padding: EdgeInsets.only(left: 10, right: 300),
                                 child: const Divider( 
                                     color: Colors.grey,
                                 ),
@@ -63,24 +66,27 @@ class Home extends StatelessWidget {
                         ),
                       ],
                     ),
-                    ElevatedButton(
-                        onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => Register()) 
-                            );
-                        },
-                        style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
-                        child:  const SizedBox(
-                            width: 300,
-                            height: 40,
-                            child: Center(
-                              child: Text(
-                                  'Create account',
-                                  style: TextStyle(color: Colors.white,)
-                              ),
-                            )
-                        ), 
+                    Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 300),
+                        child: ElevatedButton(
+                            onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => Register()) 
+                                );
+                          },
+                          style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+                          child:  const SizedBox(
+                              width: 300,
+                              height: 40,
+                              child: Center(
+                                child: Text(
+                                    'Create account',
+                                    style: TextStyle(color: Colors.white,)
+                                ),
+                              )
+                          ), 
+                      ),
                     ),
                     Center(
                       child: Row( 

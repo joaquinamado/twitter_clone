@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/tweet.dart';
 
 class Feed extends StatelessWidget {
     Feed({Key? key}) : super(key: key);
@@ -8,10 +9,18 @@ class Feed extends StatelessWidget {
         return Scaffold( 
             backgroundColor: Colors.white,
             appBar: buildAppBar(),
-            body: const Column( 
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+            body: Column( 
                 children: [ 
+                        Twitt(), 
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                            Icon(Icons.home),
+                            Icon(Icons.search),
+                            Icon(Icons.notifications),
+                            Icon(Icons.mail),
+                        ],
+                    ),
                 ],
             ),
         );
@@ -25,8 +34,9 @@ AppBar buildAppBar() {
         elevation: 0,
         title: Row(
             children: [ 
+                const Icon(Icons.reorder, color: Colors.blue,),
                 Expanded(
-                  child: Container( 
+                  child: SizedBox( 
                       height: 40,
                       width: 40,
                       child : ClipRRect( 
@@ -34,6 +44,8 @@ AppBar buildAppBar() {
                       ),
                   ),
                 ),
+
+                const Icon(Icons.auto_awesome_sharp, color: Colors.blue,),
             ],
         ),
     );

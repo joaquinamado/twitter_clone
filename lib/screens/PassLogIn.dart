@@ -1,23 +1,41 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../screens/feed.dart';
 
 class EnterPassword extends StatefulWidget {
-    EnterPassword({Key? key}) : super(key: key);
+    final String email;
+    EnterPassword({Key? key, required this.email}) : super(key: key);
 
   @override
   State<EnterPassword> createState() => _EnterPasswordState();
 }
 
 class _EnterPasswordState extends State<EnterPassword> {
-
     bool passState = false;
+    String password = '';
     final _passController = TextEditingController();
+
     @override
     void initState() {
         passState = false;
         super.initState();
     }
+    FirebaseAuth auth = FirebaseAuth.instance;
 
+     void logInAction() async {
+        try {
+          UserCredential userCredential = await FirebaseAuth.instance
+              .signInWithEmailAndPassword(email: widget.email, password: password);
+        } on FirebaseAuthException catch (e) {
+          if (e.code == 'weak-password') {
+            print('The password provided is too weak.');
+          } else if (e.code == 'email-already-in-use') {
+            print('The account already exists for that email.');
+          }
+        } catch (e) {
+          print(e);
+        }
+      }
     @override 
     Widget build(BuildContext context) {
         return Scaffold( 
@@ -38,10 +56,9 @@ class _EnterPasswordState extends State<EnterPassword> {
                     ),
                         
                     Container( 
-                        padding: EdgeInsets.symmetric(horizontal: 15),
-                        //child: enterPassword(),    
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
                         child: TextFormField( 
-                                style: TextStyle(color: Colors.white,),
+                                style: const TextStyle(color: Colors.white,),
                                 obscureText: !passState,
                                 controller: _passController,
                                 decoration: InputDecoration( 
@@ -55,9 +72,9 @@ class _EnterPasswordState extends State<EnterPassword> {
                                             });
                                         },
                                     ),
-                                    contentPadding: EdgeInsets.all(0),
+                                    contentPadding: const EdgeInsets.all(0),
                                     hintText: 'Password',
-                                    hintStyle: TextStyle(color: Colors.grey),
+                                    hintStyle: const TextStyle(color: Colors.grey),
                                 ),
                             )
                     ),
@@ -80,6 +97,7 @@ class _EnterPasswordState extends State<EnterPassword> {
                                                 context,
                                                 MaterialPageRoute(builder: (context) => Feed()) 
                                             );
+                                            logInAction();
                                         },
                                         style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
                                         child: Text("Log In", style: TextStyle(color: Colors.white),)

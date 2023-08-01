@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "387651705847",
+    "project_id": "twitter-dev-57bd4",
+    "storage_bucket": "twitter-dev-57bd4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:387651705847:android:4ffe2e62504e256f62ecf2",
+        "android_client_info": {
+          "package_name": "com.example.twitter_clone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "387651705847-4ppc5l8trif3rlsjlt6t0d6kk6icdn8l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpAbNp99YqqocJP__GVIS1Dqj8qdqMCw4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "387651705847-4ppc5l8trif3rlsjlt6t0d6kk6icdn8l.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "387651705847-bljvspn6u5jqsel9d7hdp9vkqcblpgt8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.twitterClone.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:387651705847:android:2d09f8e2ae6adca662ecf2",
+        "android_client_info": {
+          "package_name": "com.prueba.twitter_clone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "387651705847-lgkb739gdhusid3seche5kr2a40gkgge.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.prueba.twitter_clone",
+            "certificate_hash": "111dc330875db280398ce48ef7f9b0a3686def19"
+          }
+        },
+        {
+          "client_id": "387651705847-4ppc5l8trif3rlsjlt6t0d6kk6icdn8l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpAbNp99YqqocJP__GVIS1Dqj8qdqMCw4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "387651705847-4ppc5l8trif3rlsjlt6t0d6kk6icdn8l.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "387651705847-bljvspn6u5jqsel9d7hdp9vkqcblpgt8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.twitterClone.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
