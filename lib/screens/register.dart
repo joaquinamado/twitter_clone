@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import '../screens/PassLogIn.dart';
 import '../screens/feed.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import '../services/auth.dart';
 
 class Register extends StatefulWidget {
-    Register({Key? key}) : super(key: key);
+    const Register({Key? key}) : super(key: key);
 
   @override
   State<Register> createState() => _RegisterState();
@@ -19,27 +18,11 @@ class _RegisterState extends State<Register> {
         passState = false;
         super.initState();
     }
-
-    FirebaseAuth auth = FirebaseAuth.instance;
-
-    void registerAction() async {
-        try {
-            UserCredential userCredential = await FirebaseAuth.instance
-            .createUserWithEmailAndPassword(email: email, password: password);
-        } on FirebaseAuthException catch (e) {
-            if (e.code == 'weak-password') {
-                print('The password provided is too weak.');
-            } else if (e.code == 'email-already-in-use') {
-                print('The account already exists for that email.');
-            }
-        } catch (e) {
-                print(e);
-         }
-    }
-
-
+    final AuthService _authService = AuthService();
     String email = '';
     String password = '';
+    String date = '';
+    String name = '';
 
     @override 
     Widget build(BuildContext context) {
@@ -59,8 +42,8 @@ class _RegisterState extends State<Register> {
                             color: Colors.white
                         ),
                     ),
-                    searchBox('Name'),
-                    searchBox('Date of birth'),
+                    insertName(),
+                    insertDate(),
                     insertMail(),
                     insertPassword(),
                     const Spacer(),
@@ -73,11 +56,15 @@ class _RegisterState extends State<Register> {
                                 children: [ 
                                     ElevatedButton(
                                         onPressed: () async => {
-                                            registerAction(),
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(builder: (context) => Feed()) 
-                                            ),
+                                            if ( email == '' || password == '' || date == '' || name == '')
+                                                const Text('Complete all data')
+                                            else{
+                                                _authService.signUp(email, password, name, date),
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(builder: (context) => Feed( feedUpdate: FeedUpdate(twitts: []),)) 
+                                                ),
+                                            }
                                         },
                                         style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
                                         child: const Text("Next", style: TextStyle(color: Colors.white),)
@@ -91,21 +78,39 @@ class _RegisterState extends State<Register> {
         );
     }
 
-    Widget searchBox(String hinttext) {
+    Widget insertName() {
         return Container( 
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: TextField( 
-                onChanged: (value) {},
+                onChanged: (value) => setState(() {
+                    name = value;
+                }),
                 style: const TextStyle(color: Colors.white,),
-                decoration: InputDecoration( 
-                    contentPadding: const EdgeInsets.all(0),
-                    hintText: hinttext,
-                    hintStyle: const TextStyle(color: Colors.grey),
+                decoration: const InputDecoration( 
+                    contentPadding: EdgeInsets.all(0),
+                    hintText: 'Name',
+                    hintStyle: TextStyle(color: Colors.grey),
                 ),
             ),
         );
     }
 
+    Widget insertDate() {
+        return Container( 
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: TextField( 
+                onChanged: (value) => setState(() {
+                    date = value;
+                }),
+                style: const TextStyle(color: Colors.white,),
+                decoration: const InputDecoration( 
+                    contentPadding: EdgeInsets.all(0),
+                    hintText: 'Date of birth',
+                    hintStyle: TextStyle(color: Colors.grey),
+                ),
+            ),
+        );
+    }
     Widget insertMail() {
         return Container( 
             padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -161,7 +166,7 @@ AppBar buildAppBar(BuildContext context) {
         title: Row(
             children: [ 
                 IconButton( 
-                    icon: Icon(
+                    icon: const Icon(
                         Icons.close,
                         color: Colors.blue,
                         size: 30,
@@ -171,7 +176,7 @@ AppBar buildAppBar(BuildContext context) {
                     }
                 ),
                 Expanded(
-                  child: Container( 
+                  child: SizedBox( 
                       height: 40,
                       width: 40,
                       child : ClipRRect( 

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/screens/homeLogIn.dart';
+import 'package:twitter_clone/screens/log_in_mail.dart';
 import 'package:twitter_clone/screens/register.dart';
 
 class Home extends StatelessWidget {
-    Home({Key? key}) : super(key: key);
+    const Home({Key? key}) : super(key: key);
 
     @override 
     Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class Home extends StatelessWidget {
                       children: <Widget>[
                         Expanded(
                             child: Container( 
-                                padding: EdgeInsets.only(left: 300, right: 10),
+                                padding: const EdgeInsets.only(left: 300, right: 10),
                                 child: const Divider( 
                                     color: Colors.grey,
                                 ),
@@ -58,7 +58,7 @@ class Home extends StatelessWidget {
                         ),
                         Expanded(
                             child: Container( 
-                                padding: EdgeInsets.only(left: 10, right: 300),
+                                padding: const EdgeInsets.only(left: 10, right: 300),
                                 child: const Divider( 
                                     color: Colors.grey,
                                 ),
@@ -72,7 +72,7 @@ class Home extends StatelessWidget {
                             onPressed: () {
                                 Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => Register()) 
+                                    MaterialPageRoute(builder: (context) => const Register()) 
                                 );
                           },
                           style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
@@ -153,7 +153,7 @@ AppBar buildAppBar() {
         title: Row(
             children: [ 
                 Expanded(
-                  child: Container( 
+                  child: SizedBox( 
                       height: 40,
                       width: 40,
                       child : ClipRRect( 
