@@ -62,7 +62,7 @@ class _RegisterState extends State<Register> {
                                                 _authService.signUp(email, password, name, date),
                                                 Navigator.push(
                                                     context,
-                                                    MaterialPageRoute(builder: (context) => Feed( feedUpdate: FeedUpdate(twitts: []),)) 
+                                                    MaterialPageRoute(builder: (context) => const Feed()) 
                                                 ),
                                             }
                                         },

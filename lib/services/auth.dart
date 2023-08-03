@@ -6,7 +6,7 @@ class AuthService {
   FirebaseAuth auth = FirebaseAuth.instance;
 
   UserModel? _userFromFirebaseUser(User? user) {
-    return user != null? UserModel(id: user.uid): null;
+    return user != null? UserModel(id: user.uid, date: '', email:  '', name: ''): null;
   }
 
   Stream<UserModel?> get user {
@@ -20,7 +20,7 @@ class AuthService {
     
         await FirebaseFirestore.instance.collection('users')
             .doc(user.user!.uid)
-            .set({'name' : name, 'email': email, 'date': date});
+            .set({'name' : name, 'email': email, 'date': date, 'id': user.user!.uid});
       _userFromFirebaseUser(user.user);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {

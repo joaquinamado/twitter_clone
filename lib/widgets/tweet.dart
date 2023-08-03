@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:twitter_clone/widgets/twitt_model.dart';
 
 class Twitt extends StatelessWidget {
-    final String data = '';
-    final String username = '';
-    Twitt({ Key? key, required data, required username}) : super(key:key);
+    final TwittModel? datat = null;
+    Twitt({ Key? key, required datat}) : super(key:key);
 
     @override
     Widget build(BuildContext context) {
@@ -13,8 +14,8 @@ class Twitt extends StatelessWidget {
                 children: [ 
                     ListTile(
                         contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                        title: Text(username),
-                        leading: Text(data),
+                        title: Text(datat!.creator),
+                        leading: Text(datat!.text),
                     ),
                     Row( 
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

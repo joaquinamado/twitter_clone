@@ -72,7 +72,7 @@ class _EnterPasswordState extends State<EnterPassword> {
                     Align( 
                         alignment: Alignment.bottomCenter,
                         child: Padding(
-                            padding: EdgeInsets.all(15.0),
+                            padding: const EdgeInsets.all(15.0),
                             child: Row( 
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [ 
@@ -81,12 +81,17 @@ class _EnterPasswordState extends State<EnterPassword> {
                                         child: const Text("Forgot password?", style: TextStyle(color: Colors.blue),),
                                     ),
                                     ElevatedButton(
-                                        onPressed: () {
-                                             password != ''? Navigator.push(
-                                                context,
-                                                MaterialPageRoute(builder: (context) => Feed(feedUpdate: FeedUpdate(twitts: []),)) 
-                                            ) : const Text('');
-                                            password != ''? _authService.signIn(widget.email, password) : const Text('Enter your password');                                    
+                                        onPressed: () async {
+                                            if (password != '') {
+                                                _authService.signIn(widget.email, password);
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(builder: (context) => const Feed()) 
+                                                );
+                                            }
+                                            else {
+                                                const Text('Insert Password');
+                                            }
                                         },
                                         style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
                                         child: const Text("Log In", style: TextStyle(color: Colors.white),)

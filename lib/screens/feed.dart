@@ -1,20 +1,13 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:twitter_clone/controllers/twitts_controller.dart';
+import 'package:twitter_clone/controllers/user_controller.dart';
 import 'package:twitter_clone/screens/sendtweet.dart';
-import '../widgets/tweet.dart';
-
-class FeedUpdate extends ChangeNotifier {
-    final List<Twitt> twitts;
-    FeedUpdate({required this.twitts });
-    
-    void add(Twitt result) {
-        twitts.add(result);
-        notifyListeners();
-    }
-}
+import '../widgets/twitt_model.dart';
 
 class Feed extends StatefulWidget {
-    final FeedUpdate feedUpdate;
-    const Feed({Key? key, required this.feedUpdate}) : super(key: key);
+    const Feed({Key? key}) : super(key: key);
 
   @override
   State<Feed> createState() => _FeedState();
@@ -27,7 +20,7 @@ class _FeedState extends State<Feed> {
         Widget page;
         switch (_selectedIndex) {
             case 0:
-                page = FeedPage(twitts: widget.feedUpdate.twitts,);
+                page = const FeedPage();
                 break;
             case 1:
                 page = const SearchPage();
@@ -89,22 +82,22 @@ class _FeedState extends State<Feed> {
             floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         );
     }
-    
+    Future<void> _navegateAndGetResult(BuildContext context) async {
+            await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const SendTwit()) 
+        );
+        if (!mounted) return;
+
+        _onItemTapped(0);
+    }
+
     void _onItemTapped(int index) {
         setState(() {
             _selectedIndex = index;
         });
     }
 
-    Future<void> _navegateAndGetResult(BuildContext context) async {
-        final result = await Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const SendTwit()) 
-        );
-        if (!mounted) return;
-
-        widget.feedUpdate.add(result);
-    }
 }
 
 AppBar buildAppBar() {
@@ -131,21 +124,79 @@ AppBar buildAppBar() {
     );
 }
 
-class FeedPage extends StatelessWidget {
-    final List<Twitt> twitts = [];
-    FeedPage({Key? key, required twitts}) : super(key: key);
+class FeedPage extends StatefulWidget {
+    const FeedPage({Key? key}) : super(key: key);
+
+  @override
+  State<FeedPage> createState() => _FeedPageState();
+}
+
+class _FeedPageState extends State<FeedPage> {
+
     @override 
     Widget build(BuildContext context) {
+        final controller = Get.put(TwittController());
+        final controllerUsr = Get.put(UserController());
         return Center( 
-            child: ListView( 
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20), 
-                children: [ 
-                    if (twitts.isEmpty)
-                        const Text('Nothing to show', textAlign: TextAlign.center,)
-                    else 
-                        for (var twitt in twitts)
-                            twitt,       
-                ],
+            child: FutureBuilder<List<TwittModel>?>(
+              future: controller.getAllTwitts(), 
+              builder: (context, snapshot) { 
+                  if (snapshot.connectionState == ConnectionState.done) {
+                      if(snapshot.data != null) {
+                          return ListView.builder( 
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (c, index) { 
+                                return Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [ 
+                                            ListTile( 
+                                                contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20), 
+                                                leading: const Icon(Icons.person),
+                                                title: FutureBuilder(
+                                                    future: controllerUsr.getUserData(snapshot.data![index].creator),
+                                                    builder: (context, snapshot) {
+                                                        if (snapshot.connectionState == ConnectionState.done) {
+                                                            return Text(snapshot.data!.name);
+                                                        }
+                                                        else {
+                                                            return const Center(child: CircularProgressIndicator(),);
+                                                        }
+                                                    }
+                                                ),
+                                                subtitle: Column( 
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [ 
+                                                            Text(
+                                                                DateTime.now()
+                                                                .difference(snapshot.data![index].timestamp.toDate())
+                                                                .inHours > 0?
+                                                                DateTime.now()
+                                                                .difference(snapshot.data![index].timestamp.toDate())
+                                                                .inHours.toString()
+                                                                 + 'h': 
+                                                                DateTime.now()
+                                                                .difference(snapshot.data![index].timestamp.toDate())
+                                                                .inMinutes.toString() + 'm'
+                                                                ),
+                                                            //Text(snapshot.data![index].timestamp.toDate().difference().toString()),
+                                                            Text(snapshot.data![index].text),
+                                                    ],
+                                                ),
+                                            ),
+                                    ],
+                                );
+                            }
+                        );
+                    }
+                    else {
+                        return const Center(child: Text('Nothing to show'),);
+                    }
+                }
+                else {
+                    return const Center(child: CircularProgressIndicator(),);
+                }
+              }
             ),
         );
     }
