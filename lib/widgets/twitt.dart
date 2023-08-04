@@ -45,7 +45,7 @@ class _TwittState extends State<Twitt> {
 
                                     if(24 > DateTime.now()
                                     .difference(widget.snapshot.data![widget.index].timestamp.toDate())
-                                    .inHours || DateTime.now()
+                                    .inHours && DateTime.now()
                                     .difference(widget.snapshot.data![widget.index].timestamp.toDate())
                                     .inHours  > 0) 
                                         TextSpan(
@@ -59,8 +59,7 @@ class _TwittState extends State<Twitt> {
                                             color: Colors.grey,
                                             )
                                         )
-                                    else  
-                                        if( 24 < DateTime.now()
+                                    else  if( 24 <= DateTime.now()
                                         .difference(widget.snapshot.data![widget.index].timestamp.toDate())
                                         .inHours) TextSpan( 
                                             text:
@@ -75,7 +74,7 @@ class _TwittState extends State<Twitt> {
                                              ),
                                         if( DateTime.now()
                                         .difference(widget.snapshot.data![widget.index].timestamp.toDate())
-                                        .inHours < 0) 
+                                        .inHours  <= 0)
                                             TextSpan(
                                                 text:
                                                     '${DateTime.now()

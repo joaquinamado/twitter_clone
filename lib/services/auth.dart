@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../screens/feed.dart';
 import '../models/user.dart';
 
 class AuthService {
@@ -14,7 +15,7 @@ class AuthService {
     return auth.authStateChanges().map(_userFromFirebaseUser);
   }
 
-  Future signUp(email, password, name, date) async {
+  Future signUp(email, password, name, date, context) async {
     try {
       UserCredential user = (await auth.createUserWithEmailAndPassword(
           email: email, password: password));
@@ -23,6 +24,10 @@ class AuthService {
             .doc(user.user!.uid)
             .set({'name' : name, 'email': email, 'date': date, 'id': user.user!.uid});
       _userFromFirebaseUser(user.user);
+        Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const Feed()) 
+        );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         const SnackBar(content: Text('The password provided is too weak.'),);
@@ -34,18 +39,18 @@ class AuthService {
     }
   }
 
-  Future signIn(email, password) async {
+  Future signIn(email, password, context) async {
     try {
-      User user = (await auth.signInWithEmailAndPassword(
-          email: email, password: password)) as User;
+        UserCredential user = (await auth.signInWithEmailAndPassword(
+            email: email, password: password));
 
-      _userFromFirebaseUser(user);
+        _userFromFirebaseUser(user.user);
+        Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const Feed()) 
+        );
     } on FirebaseAuthException catch (e) {
-        if (e.code == 'wrong password'){
-            const SnackBar(content: Text('Wrong password'),);
-        }
-    } catch (e) {
-        const SnackBar(content: Text('An error ocurred while singin in, try again'),);
+        SnackBar(content: Text(e.toString()),);
     }
   }
 }

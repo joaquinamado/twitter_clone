@@ -11,10 +11,10 @@ class UserModel {
     factory UserModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
         final data = document.data()!;
         return UserModel( 
-            //id: document.id,
-            date: data["date"],
-            email: data["email"],
-            name: data["name"],
+            id: document.id,
+            date: data["date"] ?? '',
+            email: data["email"] ?? '',
+            name: data["name"] ?? '',
         );
     }
 }

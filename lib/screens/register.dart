@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
-import '../screens/feed.dart';
 import '../services/auth.dart';
 
 class Register extends StatefulWidget {
     const Register({Key? key}) : super(key: key);
 
+
   @override
-  State<Register> createState() => _RegisterState();
+  State<Register> createState() => RegisterState();
 }
 
-class _RegisterState extends State<Register> {
+class RegisterState extends State<Register> {
 
+    void showSnackBar(BuildContext context, String message) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar( 
+                content: Text(message, style: const TextStyle(color: Colors.black)),
+                backgroundColor: Colors.white,
+            ),
+        );
+    }
     bool passState = false;
     final _passController = TextEditingController();
     @override
@@ -59,11 +67,7 @@ class _RegisterState extends State<Register> {
                                             if ( email == '' || password == '' || date == '' || name == '')
                                                 const Text('Complete all data')
                                             else{
-                                                _authService.signUp(email, password, name, date),
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(builder: (context) => const Feed()) 
-                                                ),
+                                                _authService.signUp(email, password, name, date, context),
                                             }
                                         },
                                         style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),

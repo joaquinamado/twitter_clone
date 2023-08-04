@@ -12,9 +12,9 @@ class TwittModel {
         final data = document.data()!;
         return TwittModel( 
             id: document.id,
-            creator: data["creator"],
-            text: data["text"],
-            timestamp: data["timestamp"],
+            creator: data["creator"] ?? '',
+            text: data["text"] ?? '',
+            timestamp: data["timestamp"] ?? '',
         );
     }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../services/auth.dart';
-import '../screens/feed.dart';
 
 class EnterPassword extends StatefulWidget {
     final String email;
@@ -83,11 +82,7 @@ class _EnterPasswordState extends State<EnterPassword> {
                                     ElevatedButton(
                                         onPressed: () async {
                                             if (password != '') {
-                                                _authService.signIn(widget.email, password);
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(builder: (context) => const Feed()) 
-                                                );
+                                                _authService.signIn(widget.email, password, context);
                                             }
                                             else {
                                                 const Text('Insert Password');
