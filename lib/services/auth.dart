@@ -29,13 +29,9 @@ class AuthService {
             MaterialPageRoute(builder: (context) => const Feed()) 
         );
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        const SnackBar(content: Text('The password provided is too weak.'),);
-      } else if (e.code == 'email-already-in-use') {
-        const SnackBar(content: Text('The account already exists for that email.'),);
-      }
-    } catch (e) {
-        const SnackBar(content: Text('Error creating the account, try again'),);
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(e.code.toString()),)
+        );
     }
   }
 
@@ -50,7 +46,9 @@ class AuthService {
             MaterialPageRoute(builder: (context) => const Feed()) 
         );
     } on FirebaseAuthException catch (e) {
-        SnackBar(content: Text(e.toString()),);
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(e.code.toString()),)
+        );
     }
   }
 }

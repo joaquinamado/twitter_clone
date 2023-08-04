@@ -97,24 +97,24 @@ class Home extends StatelessWidget {
                               children: [ 
                                   const Text(
                                     "By signing up you agree to our",
-                                    style: TextStyle(color: Colors.grey, fontSize: 8),
+                                    style: TextStyle(color: Colors.grey, fontSize: 9),
                                   ),
                                   TextButton(
                                       onPressed: () {},
                                       child: const Text(
                                         "Terms Privacy Policy",
-                                        style: TextStyle(color: Colors.blue, fontSize: 8),
+                                        style: TextStyle(color: Colors.blue, fontSize: 9),
                                       )
                                   ),
                                   const Text(
                                     "and",
-                                    style: TextStyle(color: Colors.grey, fontSize: 8),
+                                    style: TextStyle(color: Colors.grey, fontSize: 9),
                                   ),
                                   TextButton(
                                       onPressed: () {},
                                       child: const Text(
                                         "Cookie Use.",
-                                        style: TextStyle(color: Colors.blue, fontSize: 8),
+                                        style: TextStyle(color: Colors.blue, fontSize: 9),
                                       )
                                   )
                               ],
@@ -126,7 +126,7 @@ class Home extends StatelessWidget {
                             children: [
                                 const Text(
                                     "Have an account already?",
-                                    style: TextStyle(color: Colors.grey, fontSize: 8),
+                                    style: TextStyle(color: Colors.grey, fontSize: 10),
                                 ),
                                 TextButton(
                                     onPressed: () {
@@ -137,7 +137,7 @@ class Home extends StatelessWidget {
                                     },
                                     child: const Text(
                                         "Log in",
-                                        style: TextStyle(color: Colors.blue, fontSize: 8),
+                                        style: TextStyle(color: Colors.blue, fontSize: 10),
                                     )
                                 )
                             ] 
