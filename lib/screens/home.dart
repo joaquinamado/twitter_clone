@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/screens/log_in_mail.dart';
-import 'package:twitter_clone/screens/register.dart';
+import '../screens/log_in_mail.dart';
+import '../screens/register.dart';
 
 class Home extends StatelessWidget {
     const Home({Key? key}) : super(key: key);

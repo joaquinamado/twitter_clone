@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../widgets/user.dart';
+import 'package:flutter/material.dart';
+import '../models/user.dart';
 
 class AuthService {
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -24,12 +25,12 @@ class AuthService {
       _userFromFirebaseUser(user.user);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        const SnackBar(content: Text('The password provided is too weak.'),);
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        const SnackBar(content: Text('The account already exists for that email.'),);
       }
     } catch (e) {
-      print(e);
+        const SnackBar(content: Text('Error creating the account, try again'),);
     }
   }
 
@@ -40,9 +41,11 @@ class AuthService {
 
       _userFromFirebaseUser(user);
     } on FirebaseAuthException catch (e) {
-      print(e);
+        if (e.code == 'wrong password'){
+            const SnackBar(content: Text('Wrong password'),);
+        }
     } catch (e) {
-      print(e);
+        const SnackBar(content: Text('An error ocurred while singin in, try again'),);
     }
   }
 }

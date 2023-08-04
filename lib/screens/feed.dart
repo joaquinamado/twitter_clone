@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:twitter_clone/controllers/twitts_controller.dart';
-import 'package:twitter_clone/controllers/user_controller.dart';
-import 'package:twitter_clone/screens/sendtweet.dart';
-import '../widgets/twitt_model.dart';
+import '../controllers/twitts_controller.dart';
+import '../screens/sendtweet.dart';
+import '../widgets/twitt.dart';
+import '../models/twitt_model.dart';
 
 class Feed extends StatefulWidget {
     const Feed({Key? key}) : super(key: key);
@@ -83,13 +83,12 @@ class _FeedState extends State<Feed> {
         );
     }
     Future<void> _navegateAndGetResult(BuildContext context) async {
-            await Navigator.push(
+            final int result = await Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const SendTwit()) 
         );
-        if (!mounted) return;
-
-        _onItemTapped(0);
+        
+        _onItemTapped(result);
     }
 
     void _onItemTapped(int index) {
@@ -100,43 +99,18 @@ class _FeedState extends State<Feed> {
 
 }
 
-AppBar buildAppBar() {
-    return AppBar( 
-        iconTheme: const IconThemeData(color: Colors.black),
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: Row(
-            children: [ 
-                //const Icon(Icons.reorder, color: Colors.blue,),
-                Expanded(
-                  child: SizedBox( 
-                      height: 40,
-                      width: 40,
-                      child : ClipRRect( 
-                          child: Image.asset('pictures/twitter_icon.png'),
-                      ),
-                  ),
-                ),
-
-                const Icon(Icons.auto_awesome_sharp, color: Colors.blue,),
-            ],
-        ),
-    );
-}
-
 class FeedPage extends StatefulWidget {
     const FeedPage({Key? key}) : super(key: key);
 
   @override
-  State<FeedPage> createState() => _FeedPageState();
+  State<FeedPage> createState() => FeedPageState();
 }
 
-class _FeedPageState extends State<FeedPage> {
+class FeedPageState extends State<FeedPage> {
 
     @override 
     Widget build(BuildContext context) {
         final controller = Get.put(TwittController());
-        final controllerUsr = Get.put(UserController());
         return Center( 
             child: FutureBuilder<List<TwittModel>?>(
               future: controller.getAllTwitts(), 
@@ -150,40 +124,7 @@ class _FeedPageState extends State<FeedPage> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [ 
-                                            ListTile( 
-                                                contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20), 
-                                                leading: const Icon(Icons.person),
-                                                title: FutureBuilder(
-                                                    future: controllerUsr.getUserData(snapshot.data![index].creator),
-                                                    builder: (context, snapshot) {
-                                                        if (snapshot.connectionState == ConnectionState.done) {
-                                                            return Text(snapshot.data!.name);
-                                                        }
-                                                        else {
-                                                            return const Center(child: CircularProgressIndicator(),);
-                                                        }
-                                                    }
-                                                ),
-                                                subtitle: Column( 
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: [ 
-                                                            Text(
-                                                                DateTime.now()
-                                                                .difference(snapshot.data![index].timestamp.toDate())
-                                                                .inHours > 0?
-                                                                DateTime.now()
-                                                                .difference(snapshot.data![index].timestamp.toDate())
-                                                                .inHours.toString()
-                                                                 + 'h': 
-                                                                DateTime.now()
-                                                                .difference(snapshot.data![index].timestamp.toDate())
-                                                                .inMinutes.toString() + 'm'
-                                                                ),
-                                                            //Text(snapshot.data![index].timestamp.toDate().difference().toString()),
-                                                            Text(snapshot.data![index].text),
-                                                    ],
-                                                ),
-                                            ),
+                                            Twitt(snapshot: snapshot,context: context,index: index,c: c,),
                                     ],
                                 );
                             }
@@ -228,4 +169,27 @@ class InboxPage extends StatelessWidget {
             child: Text('Inbox Page'),
         );
     }
+}
+
+AppBar buildAppBar() {
+    return AppBar( 
+        iconTheme: const IconThemeData(color: Colors.black),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: Row(
+            children: [ 
+                Expanded(
+                  child: SizedBox( 
+                      height: 40,
+                      width: 40,
+                      child : ClipRRect( 
+                          child: Image.asset('pictures/twitter_icon.png'),
+                      ),
+                  ),
+                ),
+
+                const Icon(Icons.auto_awesome_sharp, color: Colors.blue,),
+            ],
+        ),
+    );
 }

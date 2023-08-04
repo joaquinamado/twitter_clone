@@ -5,6 +5,7 @@ class HomeLogIn extends StatelessWidget {
     HomeLogIn({Key? key}) : super(key: key);
     
     String email = '';
+
     @override 
     Widget build(BuildContext context) {
         return Scaffold( 

@@ -8,10 +8,6 @@ class TwittModel {
 
     TwittModel({this.id, required this.creator, required this.text, required this.timestamp});
 
-    toJson() {
-        return { 'Creator' : creator, 'Text' : text, 'Timestamp' : timestamp };
-    }
-
     factory TwittModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
         final data = document.data()!;
         return TwittModel( 

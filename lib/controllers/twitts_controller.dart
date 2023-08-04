@@ -1,6 +1,6 @@
-import 'package:twitter_clone/services/post.dart';
-import 'package:twitter_clone/widgets/twitt_model.dart';
 import 'package:get/get.dart';
+import '../services/post.dart';
+import '../models/twitt_model.dart';
 
 class TwittController extends GetxController {
     static TwittController get instance => Get.find();

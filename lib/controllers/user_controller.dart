@@ -1,6 +1,6 @@
-import 'package:twitter_clone/services/user.dart';
-import 'package:twitter_clone/widgets/user.dart';
 import 'package:get/get.dart';
+import '../services/user.dart';
+import '../models/user.dart';
 
 class UserController extends GetxController {
     static UserController get instance => Get.find();

@@ -8,10 +8,6 @@ class UserModel {
 
     UserModel({this.id, required this.date, required this.email, required this.name});
 
-    toJson() {
-        return { 'Name' : name, 'Email' : email, 'Date' : date};
-    }
-
     factory UserModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
         final data = document.data()!;
         return UserModel( 

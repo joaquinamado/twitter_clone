@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/screens/feed.dart';
-import 'package:twitter_clone/services/post.dart';
+import '../services/post.dart';
 
 class SendTwit extends StatefulWidget { 
     const SendTwit({Key? key}) : super (key: key);
@@ -33,12 +32,7 @@ class _SendTwitState extends State<SendTwit> {
                         ElevatedButton(
                             onPressed: () async => {
                                 _postService.savePost(text),
-                                //Twitt(data: text, username: auth.currentUser!.uid),
-                                await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => const Feed()) 
-                                //Twitt(data: text, username: auth.currentUser!.uid),
-                                ),
+                                Navigator.pop(context, 0),
                             },
                             child: const Text('Send'),
                         ),

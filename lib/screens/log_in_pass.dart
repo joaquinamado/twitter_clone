@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/services/auth.dart';
+import '../services/auth.dart';
 import '../screens/feed.dart';
 
 class EnterPassword extends StatefulWidget {

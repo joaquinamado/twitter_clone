@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:twitter_clone/widgets/user.dart';
+import '../models/user.dart';
 
 class UserService {
     Future<UserModel> userData(String id) async {
